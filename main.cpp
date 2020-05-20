@@ -1,6 +1,10 @@
 
 #include <iostream>
 #include <vector>
+#include <cassert>
+
+double constexpr beta = 0; //probably not the best way to do this
+double constexpr gamma = 0;
 
 struct State {
   double S;
@@ -16,13 +20,19 @@ class Epidemic {
   Epidemic(State const& s0, int N) : s0_{s0}, N_{N} {}
   std::vector<State> evolve() {
     std::vector<State> states{s0_};
-    /* loop for con equazioni
-    double S=S_prev-B*I_prev*S_prev
-    double I=I_prev+B*I_prev*S_prev-G*I_prev
-    double R=R_prev+G*I_prev
-    aggiungere 0.5 a S, I, R e fare cast a int
-    assert(N=S+I+R)
-    */
+    int period; //don't know if it should be here or what
+    for (int i = 0; i != period; ++i) {
+        State s{};
+        State const& prev = states.back();
+        double S = prev.S - beta * prev.I * prev.S + 0.5;
+        double I = prev.I + beta * prev.I * prev.S - gamma * prev.I + 0.5;
+        double R = prev.R + gamma * prev.I + 0.5;
+        s.S = static_cast<int>(S);
+        s.I = static_cast<int>(I);
+        s.R = static_cast<int>(R);
+        assert(N_ == S + I + R);
+        states.push_back(s);
+    };
     return states;
   };
 };
@@ -32,8 +42,9 @@ void print(){};
 int main() {
   State s0{};
   int N;
-  s0.S = n - 1;
+  s0.S = N - 1;
   s0.I = 1;
   Epidemic e{s0, N};
+  e.evolve();
   print();
 }
