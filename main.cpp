@@ -2,8 +2,8 @@
 #include <vector>
 #include <cassert>
 
-double constexpr beta = 0; //probably not the best way to do this
-double constexpr gamma = 0;
+double constexpr beta = 0.1; //probably not the best way to do this
+double constexpr gamma = 0.5;
 
 struct State
 {
@@ -39,15 +39,24 @@ public:
   };
 };
 
-void print(){};
+void print(std::vector<State> const &st)
+{
+  for (auto const &state : st)
+  {
+    std::cout << "S = " << state.S << '\n';
+    std::cout << "I = " << state.I << '\n';
+    std::cout << "R = " << state.R << '\n';
+    std::cout << "Ro = " << state.S * beta / gamma << '\n';
+  }
+};
 
 int main()
 {
   State s0{};
-  int N;
+  int N = 100; //popolazione prova
   s0.S = N - 1;
   s0.I = 1;
   Epidemic e{s0, N};
-  e.evolve();
-  print();
+  auto spread = e.evolve();
+  print(spread);
 }
