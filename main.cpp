@@ -45,9 +45,9 @@ public:
       }
       double sum = S + I + R;
       assert(sum == N_);
-      s.S = static_cast<int>(S);
-      s.I = static_cast<int>(I);
-      s.R = static_cast<int>(R) + 0.5;
+      s.S = S;
+      s.I = I;
+      s.R = R;
       states.push_back(s);
       prev = s;
     }
@@ -55,14 +55,14 @@ public:
   }
 };
 
-void print(std::vector<State> const &st)
+void print(std::vector<State> const& states)
 {
-  for (auto const &state : st)
+  for (auto const& st : states)
   {
-    std::cout << "S = " << state.S << '\n';
-    std::cout << "I = " << state.I << '\n';
-    std::cout << "R = " << state.R << '\n';
-    std::cout << "R_0 = " << state.S * beta / gamma << '\n';
+    std::cout << "S = " << static_cast<int>(st.S) << '\n';
+    std::cout << "I = " << static_cast<int>(st.I) << '\n';
+    std::cout << "R = " << static_cast<int>(st.R) << '\n';
+    std::cout << "R_0 = " << st.S * beta / gamma << '\n';
   }
 }
 
