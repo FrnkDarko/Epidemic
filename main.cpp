@@ -27,7 +27,7 @@ public:
     double S;
     double I;
     double R;
-    while (prev.R != N_)
+    while (prev.R != N_ )
     {
       State s;
       if (prev.S > 0) 
@@ -59,10 +59,11 @@ void print(std::vector<State> const& states)
 {
   for (auto const& st : states)
   {
-    std::cout << "S = " << static_cast<int>(st.S) << '\n';
-    std::cout << "I = " << static_cast<int>(st.I) << '\n';
-    std::cout << "R = " << static_cast<int>(st.R) << '\n';
+    std::cout << "S = " << static_cast<int>(st.S + 0.5) << '\n';
+    std::cout << "I = " << static_cast<int>(st.I + 0.5) << '\n';
+    std::cout << "R = " << static_cast<int>(st.R + 0.5) << '\n';
     std::cout << "R_0 = " << st.S * beta / gamma << '\n';
+    std::cout << '\n';
   }
 }
 
