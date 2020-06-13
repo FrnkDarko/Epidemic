@@ -24,46 +24,50 @@ public:
     std::vector<State> states;  
     states.push_back(s0_);    
     State prev = states.back();
-    double S;
-    double I;
-    double R;
-    while (prev.R != N_ )
+    //double S;
+    //double I;
+    //double R; //we can do without these just fine, honestly, i mean, i guess
+    while (prev.R != N_)
     {
       State s;
-      if (prev.S > 0) 
+      double S = prev.S - (beta * prev.I * prev.S); //dovrebbe risolvere il problema della riga con S<0 in output
+      if (S > 0) //forse un altro nome per questa variabile potrebbe essere utile, si chiama tutto uguale
       {
-           S = prev.S - (beta * prev.I * prev.S);
-           I = prev.I + (beta * prev.I * prev.S) - (gamma * prev.I);
-           R = prev.R + gamma * prev.I;
+           s.S = S;
+           s.I = prev.I + (beta * prev.I * prev.S) - (gamma * prev.I);
+           s.R = prev.R + gamma * prev.I;
       }
       else 
       {
-           S = 0;
-           R = prev.R + gamma * prev.I;
-           I = N_ - R;
+           s.S = 0;
+           s.R = prev.R + gamma * prev.I;
+           s.I = N_ - s.R;
           
       }
-      double sum = S + I + R;
+      double sum = s.S + s.I + s.R;
       assert(sum == N_);
-      s.S = S;
-      s.I = I;
-      s.R = R;
       states.push_back(s);
-      prev = s;
+      prev = s; //prev è definito prima (ln 26), what do we need this for
     }
     return states;
   }
 };
 
-void print(std::vector<State> const& states)
+void print(std::vector<State> const& states) //really don't know what it's gonna look like
 {
+    std::cout << std::setw(8) << "S"
+        << std::setw(8) << "I"
+        << std::setw(8) << "R"
+        << std::setw(8) << "R_0" << '\n';
   for (auto const& st : states)
   {
-    std::cout << "S = " << static_cast<int>(st.S + 0.5) << '\n';
-    std::cout << "I = " << static_cast<int>(st.I + 0.5) << '\n';
-    std::cout << "R = " << static_cast<int>(st.R + 0.5) << '\n';
-    std::cout << "R_0 = " << st.S * beta / gamma << '\n';
-    std::cout << '\n';
+      std::cout << std::setw(8) << static_cast<int>(st.S + 0.5)
+          << std::setw(8) << static_cast<int>(st.I + 0.5)
+          << std::setw(8) << static_cast<int>(st.R + 0.5)
+          << std::setw(8) << st.S * beta / gamma << '\n';
+      //do we need an assert here if, like, the sum isn't equal to N_?
+      //maybe we can break the loop when R=N_?
+      //do we have to redeclare N_ here if we need it?
   }
 }
 
