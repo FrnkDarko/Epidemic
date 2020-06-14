@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cassert>
+#include <iomanip>
 
 double constexpr beta = 0.1; //trial value
 double constexpr gamma = 0.5; //trial value
@@ -45,9 +46,9 @@ public:
           
       }
       double sum = s.S + s.I + s.R;
-      assert(sum == N_);
+      //assert(sum == N_);
       states.push_back(s);
-      prev = s; //prev è definito prima (ln 26), what do we need this for
+      prev = s; //prev Ã¨ definito prima (ln 26), what do we need this for
     }
     return states;
   }
