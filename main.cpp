@@ -3,14 +3,12 @@
 #include <cassert>
 #include <iomanip>
 
-double constexpr beta = 0.03;  //trial value
-double constexpr gamma = 0.2; //trial value
-
 struct State
 {
 	double S;
 	double I;
 	double R;
+	double R_0;
 };
 
 class Epidemic
@@ -20,7 +18,7 @@ class Epidemic
 
 public:
 	Epidemic(State const& s0, int const N) : s0_{ s0 }, N_{ N } {}
-	std::vector<State> evolve() const
+	std::vector<State> evolve(double const beta, double const gamma) const
 	{
 		std::vector<State> states;
 		states.push_back(s0_);
@@ -28,19 +26,19 @@ public:
 		while (static_cast<int>(prev.R + 0.5) != N_)
 		{
 			State s;
+			s.R = prev.R + gamma * prev.I;
 			double S = prev.S - (beta * prev.I * prev.S);
 			if (S > 0)
 			{
 				s.S = S;
 				s.I = prev.I + (beta * prev.I * prev.S) - (gamma * prev.I);
-				s.R = prev.R + gamma * prev.I;
 			}
 			else
 			{
 				s.S = 0;
-				s.R = prev.R + gamma * prev.I;
 				s.I = N_ - s.R;
 			}
+			s.R_0 = s.S * beta / gamma;
 			double sum = s.S + s.I + s.R;
 			assert(sum == N_);
 			states.push_back(s);
@@ -51,16 +49,20 @@ public:
 
 void print(std::vector<State> const& states)
 {
-	std::cout << std::setw(8) << "S"
-		<< std::setw(8) << "I"
-		<< std::setw(8) << "R"
-		<< std::setw(8) << "R_0" << '\n';
+	std::cout << std::setw(10) <<"day"
+		<< std::setw(10) << "S"
+		<< std::setw(10) << "I"
+		<< std::setw(10) << "R"
+		<< std::setw(10) << "R_0" << '\n';
+	int i = 0;
 	for (auto const& st : states)
 	{
-		std::cout << std::setw(8) << static_cast<int>(st.S + 0.5)
-			<< std::setw(8) << static_cast<int>(st.I + 0.5)
-			<< std::setw(8) << static_cast<int>(st.R + 0.5)
-			<< std::setw(8) << st.S * beta / gamma << '\n';
+		std::cout << std:.setw(10) << i
+			<< std::setw(10) << static_cast<int>(st.S + 0.5)
+			<< std::setw(10) << static_cast<int>(st.I + 0.5)
+			<< std::setw(10) << static_cast<int>(st.R + 0.5)
+			<< std::setw(10) << st.R_0 << '\n';
+		++i;
 	}
 }
 
@@ -71,6 +73,8 @@ int main()
 	s0.S = N - 1;
 	s0.I = 1;
 	Epidemic e(s0, N);
-	auto spread = e.evolve();
+	double const beta = 0.03; //trial value
+	double const gamma = 0.5;; //trial value
+	auto spread = e.evolve(beta, gamma);
 	print(spread);
 }
