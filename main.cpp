@@ -42,6 +42,7 @@ public:
 			double sum = s.S + s.I + s.R;
 			assert(sum == N_);
 			states.push_back(s);
+			prev = s;
 		}
 		return states;
 	}
@@ -57,7 +58,7 @@ void print(std::vector<State> const& states)
 	int i = 0;
 	for (auto const& st : states)
 	{
-		std::cout << std:.setw(10) << i
+		std::cout << std::setw(10) << i
 			<< std::setw(10) << static_cast<int>(st.S + 0.5)
 			<< std::setw(10) << static_cast<int>(st.I + 0.5)
 			<< std::setw(10) << static_cast<int>(st.R + 0.5)
