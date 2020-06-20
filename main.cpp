@@ -77,5 +77,13 @@ int main()
 	double const beta = 0.03; //trial value
 	double const gamma = 0.5;; //trial value
 	auto spread = e.evolve(beta, gamma);
+	std::cout << std::setw(10) << " "
+		<< std::setw(10) << "N"
+		<< std::setw(10) << "beta"
+		<< std::setw(10) << "gamma" << '\n';
+	std::cout << std::setw(10) << " "
+		<< std::setw(10) << N
+		<< std::setw(10) << beta
+		<< std::setw(10) << gamma << '\n' << '\n';
 	print(spread);
 }
