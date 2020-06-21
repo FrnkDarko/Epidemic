@@ -17,10 +17,16 @@ class Epidemic
 	int const N_;
 
 public:
-	Epidemic(State const& s0, int const N) : s0_{ s0 }, N_{ N } {}
+	Epidemic(State const& s0, int const N) : s0_{ s0 }, N_{ N } 
+	{
+		assert(N > 1);
+	}
 	std::vector<State> evolve(double const beta, double const gamma) const
 	{
-		std::vector<State> states;
+		assert(beta >= 0 && beta <= 1); //two separate asserts?
+		assert(gamma >= 0 && gamma <= 1); //two separate asserts?
+		//maybe runtime errors for beta, gamma = 0 / = 1? we should discuss this
+		std::vector <State> states;
 		states.push_back(s0_);
 		State prev = states.back();
 		while (static_cast<int>(prev.R + 0.5) != N_)
