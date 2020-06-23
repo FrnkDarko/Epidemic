@@ -13,12 +13,7 @@ struct State
 
 bool operator==(State const& l, State const& r)
 {
-	return l.S == r.S && l.I == r.I && l.R == r.R;
-}
-
-bool operator!=(State const& l, State const& r) //do we need this? i wrote it but idk
-{
-	return !(l == r);
+	return l.S == r.S && l.I == r.I && l.R == r.R && l.R_0 == r.R_0;
 }
 
 class Epidemic
@@ -34,7 +29,7 @@ public:
 	std::vector<State> evolve(double const beta, double const gamma) const
 	{
 		assert(beta >= 0 && beta <= 1); //two separate asserts?
-		assert(gamma >= 0 && gamma <= 1); //two separate asserts?
+		assert(gamma >= 0 && gamma <= 1); //two separate asserts? //I guess?
 		std::vector <State> states;
 		states.push_back(s0_);
 		State prev = states.back();
@@ -56,11 +51,11 @@ public:
 			s.R_0 = s.S * beta / gamma;
 			double sum = s.S + s.I + s.R;
 			assert(sum == N_);
-			if (prev == s) //not sure if putting this here is the right thing to do honestly, also what do u think
+			if (prev == s) 
 			{
-				break; //would something in cout look good here?
+				break;
 			}
-			else 
+			else
 			{
 				states.push_back(s);
 				prev = s;
@@ -77,7 +72,7 @@ void print(std::vector<State> const& states)
 		<< std::setw(10) << "I"
 		<< std::setw(10) << "R"
 		<< std::setw(10) << "R_0" << '\n';
-	int i = 0;
+	int i = 1; //I think it's better to start from day 1
 	for (auto const& st : states)
 	{
 		std::cout << std::setw(10) << i
@@ -96,8 +91,8 @@ int main()
 	s0.S = N - 1;
 	s0.I = 1;
 	Epidemic e(s0, N);
-	double const beta = 0.03; //trial value
-	double const gamma = 0.5;; //trial value
+	double const beta = 0.1; //trial value
+	double const gamma = 0.5; //trial value
 	auto spread = e.evolve(beta, gamma);
 	std::cout << std::setw(10) << " "
 		<< std::setw(10) << "N"
