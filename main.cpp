@@ -11,6 +11,16 @@ struct State
 	double R_0;
 };
 
+bool operator==(State const& l, State const& r)
+{
+	return l.S == r.S && l.I == r.I && l.R == r.R;
+}
+
+bool operator!=(State const& l, State const& r) //do we need this? i wrote it but idk
+{
+	return !(l == r);
+}
+
 class Epidemic
 {
 	State s0_;
@@ -25,7 +35,6 @@ public:
 	{
 		assert(beta >= 0 && beta <= 1); //two separate asserts?
 		assert(gamma >= 0 && gamma <= 1); //two separate asserts?
-		//maybe runtime errors for beta, gamma = 0 / = 1? we should discuss this
 		std::vector <State> states;
 		states.push_back(s0_);
 		State prev = states.back();
@@ -47,8 +56,15 @@ public:
 			s.R_0 = s.S * beta / gamma;
 			double sum = s.S + s.I + s.R;
 			assert(sum == N_);
-			states.push_back(s);
-			prev = s;
+			if (prev == s) //not sure if putting this here is the right thing to do honestly, also what do u think
+			{
+				break; //would something in cout look good here?
+			}
+			else 
+			{
+				states.push_back(s);
+				prev = s;
+			}
 		}
 		return states;
 	}
