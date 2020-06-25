@@ -28,8 +28,11 @@ public:
 	}
 	std::vector<State> evolve(double const beta, double const gamma) const
 	{
-		assert(beta >= 0 && beta <= 1); //two separate asserts?
-		assert(gamma >= 0 && gamma <= 1); //two separate asserts? //I guess?
+		assert(beta >= 0. && beta <= 1.);
+		if (beta == 0.) {
+			throw std::runtime_error{ "no epidemic" };
+		}
+		assert(gamma >= 0. && gamma <= 1.);
 		std::vector <State> states;
 		states.push_back(s0_);
 		State prev = states.back();
@@ -38,14 +41,14 @@ public:
 			State s;
 			s.R = prev.R + gamma * prev.I;
 			double S = prev.S - (beta * prev.I * prev.S);
-			if (S > 0)
+			if (S > 0.)
 			{
 				s.S = S;
 				s.I = prev.I + (beta * prev.I * prev.S) - (gamma * prev.I);
 			}
 			else
 			{
-				s.S = 0;
+				s.S = 0.;
 				s.I = N_ - s.R;
 			}
 			s.R_0 = s.S * beta / gamma;
@@ -72,15 +75,15 @@ void print(std::vector<State> const& states)
 		<< std::setw(10) << "I"
 		<< std::setw(10) << "R"
 		<< std::setw(10) << "R_0" << '\n';
-	int i = 1; //I think it's better to start from day 1
+	int day = 1;
 	for (auto const& st : states)
 	{
-		std::cout << std::setw(10) << i
+		std::cout << std::setw(10) << day
 			<< std::setw(10) << static_cast<int>(st.S + 0.5)
 			<< std::setw(10) << static_cast<int>(st.I + 0.5)
 			<< std::setw(10) << static_cast<int>(st.R + 0.5)
 			<< std::setw(10) << st.R_0 << '\n';
-		++i;
+		++day;
 	}
 }
 
