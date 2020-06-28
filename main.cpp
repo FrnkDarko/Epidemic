@@ -37,7 +37,7 @@ public:
 			throw std::runtime_error{"no epidemic"};
 		}
 		assert(gamma > 0. && gamma <= 1.);
-		if (gamma == 0)
+		if (gamma == 0.)
 		{
 			throw std::runtime_error{"no chance of recovery"};
 		}
@@ -129,13 +129,17 @@ TEST_CASE("Testing Epidemic")
 	SUBCASE("no epidemic") {
 		double const beta = 0.;
 		double const gamma = 0.5;
+		DOCTEST_CHECK_THROWS(e.evolve(beta, gamma));
 		auto spread = e.evolve(beta, gamma);
+		
 	}
 
 	SUBCASE("no chance of recovery") {
 		double const beta = 0.5;
 		double const gamma = 0.;
+		CHECK_THROWS(e.evolve(beta, gamma));
 		auto spread = e.evolve(beta, gamma);
+		
 	}
 
 	SUBCASE("beta=0.1, gamma=0.9") { //test values for beta, gamma
@@ -144,12 +148,12 @@ TEST_CASE("Testing Epidemic")
 		auto spread = e.evolve(beta, gamma);
 		State const& s = spread[1];
 		CHECK(s.S == doctest::Approx(89.1)); //test 2nd element of spread
-		CHECK(s.I == doctest::Approx(10));
+		CHECK(s.I == doctest::Approx(10.));
 		CHECK(s.R == doctest::Approx(0.9));
 		State const& s_last = spread.back();
-		CHECK(s_last.S == doctest::Approx(0)); //test last element of spread
-		CHECK(s_last.I == doctest::Approx(0));
-		CHECK(s_last.R == doctest::Approx(100));
+		CHECK(s_last.S == doctest::Approx(0.0).epsilon(0.01)); //test last element of spread
+		CHECK(s_last.I == doctest::Approx(0.0).epsilon(0.5));
+		CHECK(s_last.R == doctest::Approx(100.0).epsilon(0.01));
 	}
 
 	SUBCASE("beta=0.4, gamma=0.1") { //test values for beta, gamma
@@ -161,8 +165,8 @@ TEST_CASE("Testing Epidemic")
 		CHECK(s.I == doctest::Approx(40.5));
 		CHECK(s.R == doctest::Approx(0.1));
 		State const& s_last = spread.back();
-		CHECK(s_last.S == doctest::Approx(0)); //test last element of spread
-		CHECK(s_last.I == doctest::Approx(0));
-		CHECK(s_last.R == doctest::Approx(100));
+		CHECK(s_last.S == doctest::Approx(0.0).epsilon(0.01)); //test last element of spread
+		CHECK(s_last.I == doctest::Approx(0.0).epsilon(0.5));
+		CHECK(s_last.R == doctest::Approx(100.0).epsilon(0.01));
 	}
 }
