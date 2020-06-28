@@ -1,6 +1,3 @@
-#include <iostream>
-#include <iomanip>
-
 #include "state.hpp"
 #include "epidemic.hpp"
 
