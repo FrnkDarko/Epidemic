@@ -8,6 +8,8 @@ int main()
 	double const gamma = 0.5; //trial value
 	State s0{};
 	s0.I = 1;
+	s0.S = N - s0.I;
+	s0.R_0 = s0.S * beta / gamma;
 	Epidemic e(s0, N);
 	auto spread = e.evolve(beta, gamma);
 	std::cout << std::setw(10) << " "
