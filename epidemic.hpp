@@ -15,7 +15,16 @@ class Epidemic
 public:
 	Epidemic(State const& s0, int const N) : s0_{ s0 }, N_{ N }
 	{
-		assert(N > 1);
+		assert(N > 0);
+		assert(s0.I >= 0.);
+		if (s0.I == 0.)
+		{
+			throw std::runtime_error{ "no infected subjects" };
+		}
+		if (N < s0.I)
+		{
+			throw std::runtime_error{ "population must be at least equal to the number of infected subjects" };
+		}
 	}
 	std::vector<State> evolve(double const beta, double const gamma) const;
 };

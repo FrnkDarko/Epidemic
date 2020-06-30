@@ -13,6 +13,8 @@ std::vector<State> Epidemic::evolve(double const beta, double const gamma) const
 	{
 		throw std::runtime_error{ "no chance of recovery" };
 	}
+	s0_.S = N_ - s0_.I;
+	s0_.R_0 = s0_.S * beta / gamma;
 	std::vector<State> states;
 	states.push_back(s0_);
 	State prev = states.back();
