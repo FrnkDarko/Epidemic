@@ -48,4 +48,17 @@ inline void print(std::vector<State> const& states)
 	}
 }
 
+inline void draw(std::vector<State> const& states){
+	int day = 1;
+	std::cout<< '\n'<< "   Susceptible (e+4)"<< '\n';
+	for (auto const& st : states){
+		std::cout<< day <<"  ";
+		for (int i = 0; i < st.S/10000; ++i){
+		std::cout<< "*";
+		}
+		std::cout<<'\n';
+		++day;
+	}
+}
+
 #endif

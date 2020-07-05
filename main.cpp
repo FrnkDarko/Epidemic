@@ -19,4 +19,5 @@ int main()
 			  << std::setw(10) << gamma << '\n'
 			  << '\n';
 	print(spread);
+	draw(spread);
 }
