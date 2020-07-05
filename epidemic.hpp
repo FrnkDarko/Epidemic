@@ -46,17 +46,48 @@ inline void print(std::vector<State> const& states)
 			<< std::setw(10) << st.R_0 << '\n';
 		++day;
 	}
+	std::cout << '\n';
 }
 
-inline void draw(std::vector<State> const& states){
+inline void draw(std::vector<State> const& states, int scale)
+{
 	int day = 1;
-	std::cout<< '\n'<< "   Susceptible (e+4)"<< '\n';
-	for (auto const& st : states){
-		std::cout<< day <<"  ";
-		for (int i = 0; i < st.S/10000; ++i){
-		std::cout<< "*";
+	std::cout << std::setw(10) << " "
+		<< "Susceptible (scale: " << std::scientific << scale << ")" << '\n'; //idk if std::scientific is the best choice here
+	for (auto const& st : states)
+	{
+		std::cout << std::setw(10) << day;
+		for (int i = 0; i < st.S / scale; ++i)
+		{
+			std::cout << "*";
 		}
-		std::cout<<'\n';
+		std::cout << '\n';
+		++day;
+	}
+	std::cout << '\n';
+	std::cout << std::setw(10) << " "
+		<< "Infected (scale: " << std::scientific << scale << ")" << '\n';
+	for (auto const& st : states)
+	{
+		std::cout << day;
+		for (int i = 0; i < st.I / scale; ++i)
+		{
+			std::cout << "*";
+		}
+		std::cout << '\n';
+		++day;
+	}
+	std::cout << '\n';
+	std::cout << std::setw(10) << " " 
+		<< "Recovered (scale: " << std::scientific << scale << ")" << '\n';
+	for (auto const& st : states)
+	{
+		std::cout << std::setw(10) << day;
+		for (int i = 0; i < st.R / scale; ++i)
+		{
+			std::cout << "*";
+		}
+		std::cout << '\n';
 		++day;
 	}
 }

@@ -19,5 +19,6 @@ int main()
 			  << std::setw(10) << gamma << '\n'
 			  << '\n';
 	print(spread);
-	draw(spread);
+	int scale = 100000; //trial value
+	draw(spread, scale);
 }
