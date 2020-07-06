@@ -1,5 +1,6 @@
 #include "state.hpp"
 #include "epidemic.hpp"
+#include "graph.hpp"
 
 std::vector<State> Epidemic::evolve(double const beta, double const gamma) const
 {

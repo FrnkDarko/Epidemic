@@ -49,11 +49,9 @@ inline void print(std::vector<State> const& states)
 	std::cout << '\n';
 }
 
-inline void draw(std::vector<State> const& states, int scale)
+void drawS(std::vector<State> const& states, int scale)
 {
 	int dayS = 1;
-	int dayI = 1;
-	int dayR = 1;
 	std::cout << std::setw(10) << " "
 		<< "Susceptible (scale: " << std::scientific << scale << ")" << '\n'; //idk if std::scientific is the best choice here
 	for (auto const& st : states)
@@ -67,6 +65,11 @@ inline void draw(std::vector<State> const& states, int scale)
 		++dayS;
 	}
 	std::cout << '\n';
+}
+
+void drawI(std::vector<State> const& states, int scale) 
+{
+	int dayI = 1;
 	std::cout << std::setw(10) << " "
 		<< "Infected (scale: " << std::scientific << scale << ")" << '\n';
 	for (auto const& st : states)
@@ -80,7 +83,12 @@ inline void draw(std::vector<State> const& states, int scale)
 		++dayI;
 	}
 	std::cout << '\n';
-	std::cout << std::setw(10) << " " 
+}
+
+void drawR(std::vector<State> const& states, int scale) 
+{
+	int dayR = 1;
+	std::cout << std::setw(10) << " "
 		<< "Recovered (scale: " << std::scientific << scale << ")" << '\n';
 	for (auto const& st : states)
 	{
@@ -91,6 +99,31 @@ inline void draw(std::vector<State> const& states, int scale)
 		}
 		std::cout << '\n';
 		++dayR;
+	}
+}
+
+enum class Graph;
+
+inline void draw(std::vector<State> const& states, int scale, Graph graph)
+{
+	switch (graph)
+	{
+	case Graph::S:
+		drawS(states, scale);
+		break;
+	case Graph::I:
+		drawI(states, scale);
+		break;
+	case Graph::R:
+		drawR(states, scale);
+		break;
+	case Graph::all:
+		drawS(states, scale);
+		drawI(states, scale);
+		drawR(states, scale);
+		break;
+	default:
+		break;
 	}
 }
 
