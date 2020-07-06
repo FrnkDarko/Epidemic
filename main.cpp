@@ -1,6 +1,5 @@
 #include "state.hpp"
 #include "epidemic.hpp"
-#include "graph.hpp"
 
 int main()
 {	
@@ -21,5 +20,8 @@ int main()
 			  << '\n';
 	print(spread);
 	int scale = 100000; //trial value
-	draw(spread, scale, Graph::all);
+	//draw(spread, scale, Graph::all);
+	draw(spread, scale, Graph::S);
+	//draw(spread, scale, Graph::I);
+	//draw(spread, scale, Graph::R);
 }

@@ -6,7 +6,7 @@
 #include <iomanip>
 #include <iostream>
 
-class State; //why in the fuck tho
+class State; 
 
 class Epidemic
 {
@@ -49,11 +49,11 @@ inline void print(std::vector<State> const& states)
 	std::cout << '\n';
 }
 
-void drawS(std::vector<State> const& states, int scale)
+inline void drawS(std::vector<State> const& states, int scale)
 {
 	int dayS = 1;
 	std::cout << std::setw(10) << " "
-		<< "Susceptible (scale: " << std::scientific << scale << ")" << '\n'; //idk if std::scientific is the best choice here
+		<< "Susceptible (scale: " << std::scientific << scale << ")" << '\n'; 
 	for (auto const& st : states)
 	{
 		std::cout << std::setw(10) << dayS << " ";
@@ -67,7 +67,7 @@ void drawS(std::vector<State> const& states, int scale)
 	std::cout << '\n';
 }
 
-void drawI(std::vector<State> const& states, int scale) 
+inline void drawI(std::vector<State> const& states, int scale) 
 {
 	int dayI = 1;
 	std::cout << std::setw(10) << " "
@@ -85,7 +85,7 @@ void drawI(std::vector<State> const& states, int scale)
 	std::cout << '\n';
 }
 
-void drawR(std::vector<State> const& states, int scale) 
+inline void drawR(std::vector<State> const& states, int scale) 
 {
 	int dayR = 1;
 	std::cout << std::setw(10) << " "
@@ -102,7 +102,7 @@ void drawR(std::vector<State> const& states, int scale)
 	}
 }
 
-enum class Graph;
+enum class Graph { S, I, R, all };
 
 inline void draw(std::vector<State> const& states, int scale, Graph graph)
 {
