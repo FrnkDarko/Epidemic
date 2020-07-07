@@ -1,7 +1,7 @@
 #include "doctest.h"
 
-#include "epidemic.hpp"
 #include "state.hpp"
+#include "epidemic.hpp"
 
 TEST_CASE("Testing Epidemic") {
   State s0{};

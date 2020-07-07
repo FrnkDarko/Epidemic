@@ -1,5 +1,5 @@
-#include "epidemic.hpp"
 #include "state.hpp"
+#include "epidemic.hpp"
 
 int main() {
   int const N = 1000000;    // trial value
