@@ -46,7 +46,7 @@ inline void print(std::vector<State> const &states) {
 inline void drawS(std::vector<State> const &states, int scale) {
   int dayS = 1;
   std::cout << std::setw(10) << " "
-            << "Susceptible (scale: " << std::scientific << scale << ")"
+      << "Susceptible (scale: 1:" << scale << ")"
             << '\n';
   for (auto const &st : states) {
     std::cout << std::setw(10) << dayS << " ";
@@ -62,7 +62,7 @@ inline void drawS(std::vector<State> const &states, int scale) {
 inline void drawI(std::vector<State> const &states, int scale) {
   int dayI = 1;
   std::cout << std::setw(10) << " "
-            << "Infected (scale: " << std::scientific << scale << ")" << '\n';
+      << "Infected (scale: 1:" << scale << ")" << '\n';
   for (auto const &st : states) {
     std::cout << std::setw(10) << dayI << " ";
     for (int i = 0; i < st.I / scale; ++i) {
@@ -77,7 +77,7 @@ inline void drawI(std::vector<State> const &states, int scale) {
 inline void drawR(std::vector<State> const &states, int scale) {
   int dayR = 1;
   std::cout << std::setw(10) << " "
-            << "Recovered (scale: " << std::scientific << scale << ")" << '\n';
+            << "Recovered (scale: 1:" << scale << ")" << '\n';
   for (auto const &st : states) {
     std::cout << std::setw(10) << dayR << " ";
     for (int i = 0; i < st.R / scale; ++i) {
