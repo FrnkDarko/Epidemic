@@ -46,8 +46,7 @@ inline void print(std::vector<State> const &states) {
 inline void drawS(std::vector<State> const &states, int scale) {
   int dayS = 1;
   std::cout << std::setw(10) << " "
-      << "Susceptible (scale: 1:" << scale << ")"
-            << '\n';
+            << "Susceptible (scale: 1:" << scale << ")" << '\n';
   for (auto const &st : states) {
     std::cout << std::setw(10) << dayS << " ";
     for (int i = 0; i < st.S / scale; ++i) {
@@ -62,7 +61,7 @@ inline void drawS(std::vector<State> const &states, int scale) {
 inline void drawI(std::vector<State> const &states, int scale) {
   int dayI = 1;
   std::cout << std::setw(10) << " "
-      << "Infected (scale: 1:" << scale << ")" << '\n';
+            << "Infected (scale: 1:" << scale << ")" << '\n';
   for (auto const &st : states) {
     std::cout << std::setw(10) << dayI << " ";
     for (int i = 0; i < st.I / scale; ++i) {
